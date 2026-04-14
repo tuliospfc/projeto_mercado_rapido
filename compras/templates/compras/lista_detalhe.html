@@ -1,0 +1,96 @@
+{% extends "compras/base.html" %}
+
+{% block title %}Detalhes da lista{% endblock %}
+
+{% block content %}
+    <h2>Lista de {{ lista }}</h2>
+
+    <div class="resumo">
+        <div class="box">
+            <strong>Total</strong>
+            <p>{{ lista.total_itens }}</p>
+        </div>
+        <div class="box">
+            <strong>Comprados</strong>
+            <p>{{ lista.total_comprados }}</p>
+        </div>
+        <div class="box">
+            <strong>Pendentes</strong>
+            <p>{{ lista.total_pendentes }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Adicionar item</h3>
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="erro-lista">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <label for="{{ form.nome.id_for_label }}">Nome do item</label>
+            {{ form.nome }}
+            {% if form.nome.errors %}<div class="erro-lista">{{ form.nome.errors }}</div>{% endif %}
+
+            <label for="{{ form.quantidade.id_for_label }}">Quantidade</label>
+            {{ form.quantidade }}
+            {% if form.quantidade.errors %}<div class="erro-lista">{{ form.quantidade.errors }}</div>{% endif %}
+
+            <label for="{{ form.observacao.id_for_label }}">Observação</label>
+            {{ form.observacao }}
+            {% if form.observacao.errors %}<div class="erro-lista">{{ form.observacao.errors }}</div>{% endif %}
+
+            <button type="submit" class="btn btn-success">Adicionar item</button>
+        </form>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3>Itens da lista</h3>
+        {% if lista.total_comprados > 0 %}
+            <form method="post" action="{% url 'compras:limpar_comprados' lista.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning" onclick="return confirm('Tem certeza que deseja remover todos os itens comprados?')">
+                    Limpar comprados ({{ lista.total_comprados }})
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if lista.itens.all %}
+        {% for item in lista.itens.all %}
+            <div class="card {% if item.comprado %}item-comprado{% else %}item-pendente{% endif %}">
+                <div class="item-linha">
+                    <div>
+                        <strong>
+                            {% if item.comprado %}
+                                ✅ <s>{{ item.nome }}</s>
+                            {% else %}
+                                ⬜ {{ item.nome }}
+                            {% endif %}
+                        </strong>
+
+                        {% if item.quantidade %}<p>Quantidade: {{ item.quantidade }}</p>{% endif %}
+                        {% if item.observacao %}<p>Observação: {{ item.observacao }}</p>{% endif %}
+                    </div>
+
+                    <div class="acoes">
+                        <form method="post" action="{% url 'compras:item_toggle' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn {% if item.comprado %}btn-warning{% else %}btn-success{% endif %}">
+                                {% if item.comprado %}Desmarcar{% else %}Marcar como comprado{% endif %}
+                            </button>
+                        </form>
+
+                        <form method="post" action="{% url 'compras:item_delete' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Esta lista ainda não possui itens.</p>
+    {% endif %}
+{% endblock %}

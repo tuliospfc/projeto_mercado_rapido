@@ -1,0 +1,24 @@
+{% extends "compras/base.html" %}
+
+{% block title %}Listas mensais{% endblock %}
+
+{% block content %}
+    <h2>Listas cadastradas</h2>
+
+    {% if listas %}
+        {% for lista in listas %}
+            <div class="card">
+                <h3>
+                    <a href="{% url 'compras:lista_detail' lista.id %}">{{ lista }}</a>
+                </h3>
+                <p>Total de itens: {{ lista.total_itens }}</p>
+                <p>Comprados: {{ lista.total_comprados }}</p>
+                <p>Pendentes: {{ lista.total_pendentes }}</p>
+                <a class="btn btn-primary" href="{% url 'compras:lista_detail' lista.id %}">Abrir lista</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma lista cadastrada ainda.</p>
+        <a class="btn btn-success" href="{% url 'compras:lista_create' %}">Criar primeira lista</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "compras/base.html" %}
+
+{% block title %}Nova lista mensal{% endblock %}
+
+{% block content %}
+    <h2>Criar nova lista mensal</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="erro-lista">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <label for="{{ form.mes.id_for_label }}">Mês</label>
+        {{ form.mes }}
+        {% if form.mes.errors %}
+            <div class="erro-lista">{{ form.mes.errors }}</div>
+        {% endif %}
+
+        <label for="{{ form.ano.id_for_label }}">Ano</label>
+        {{ form.ano }}
+        {% if form.ano.errors %}
+            <div class="erro-lista">{{ form.ano.errors }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Salvar lista</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Compras Mensais{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; color: #222; }
+        .container { width: 90%; max-width: 960px; margin: 30px auto; background: #fff; padding: 24px; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+        h1, h2, h3 { margin-top: 0; }
+        a { text-decoration: none; color: #0b57d0; }
+        a:hover { text-decoration: underline; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+        .menu { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { display: inline-block; padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; }
+        .btn-primary { background: #0b57d0; color: white; }
+        .btn-success { background: #198754; color: white; }
+        .btn-warning { background: #d97706; color: white; }
+        .btn-danger { background: #c62828; color: white; }
+        .form-control { width: 100%; padding: 10px 12px; margin-top: 4px; margin-bottom: 14px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        .card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; margin-bottom: 14px; background: #fafafa; }
+        .item-comprado { background: #ecfdf5; border-color: #a7f3d0; }
+        .item-pendente { background: #fff; }
+        .item-linha { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+        .acoes { display: flex; gap: 8px; flex-wrap: wrap; }
+        .mensagens { list-style: none; padding: 0; }
+        .mensagens li { padding: 12px; border-radius: 8px; margin-bottom: 10px; }
+        .success { background: #d1fae5; }
+        .warning { background: #fef3c7; }
+        .info { background: #dbeafe; }
+        .erro-lista { color: #c62828; margin-bottom: 14px; }
+        .resumo { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+        .resumo .box { flex: 1; min-width: 160px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="topbar">
+            <div>
+                <h1>Compras Mensais</h1>
+                <p>Controle simples das compras da casa, mês a mês.</p>
+            </div>
+            <div class="menu">
+                <a class="btn btn-primary" href="{% url 'compras:lista_list' %}">Listas</a>
+                <a class="btn btn-success" href="{% url 'compras:lista_create' %}">Nova lista</a>
+            </div>
+        </div>
+
+        {% if messages %}
+            <ul class="mensagens">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
