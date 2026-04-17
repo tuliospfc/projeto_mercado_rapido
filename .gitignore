@@ -154,7 +154,8 @@ cython_debug/
 .DS_Store
 
 # Database navigator
-dbnavigator.xml
+*dbnavigator.xml
+.idea
 
 # Ignorar migrations locais (exceto a inicial)
 compras/migrations/0002_*.py
