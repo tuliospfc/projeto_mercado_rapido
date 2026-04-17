@@ -14,7 +14,15 @@
                 <p>Total de itens: {{ lista.total_itens }}</p>
                 <p>Comprados: {{ lista.total_comprados }}</p>
                 <p>Pendentes: {{ lista.total_pendentes }}</p>
-                <a class="btn btn-primary" href="{% url 'compras:lista_detail' lista.id %}">Abrir lista</a>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a class="btn btn-primary" href="{% url 'compras:lista_detail' lista.id %}">Abrir lista</a>
+                    <form method="post" action="{% url 'compras:lista_delete' lista.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta lista? Todos os itens serão perdidos.')">
+                            Excluir lista
+                        </button>
+                    </form>
+                </div>
             </div>
         {% endfor %}
     {% else %}

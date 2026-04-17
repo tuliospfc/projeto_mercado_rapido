@@ -91,3 +91,14 @@ def item_delete(request, item_id):
     item.delete()
     messages.success(request, f'Item "{nome_item}" removido com sucesso.')
     return redirect('compras:lista_detail', lista_id=lista_id)
+
+
+def lista_delete(request, lista_id):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    lista = get_object_or_404(ListaCompraMensal, id=lista_id)
+    nome_lista = str(lista)
+    lista.delete()
+    messages.success(request, f'Lista "{nome_lista}" removida com sucesso.')
+    return redirect('compras:lista_list')
