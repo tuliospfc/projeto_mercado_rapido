@@ -69,6 +69,18 @@ def limpar_comprados(request, lista_id):
     return redirect('compras:lista_detail', lista_id=lista_id)
 
 
+def desmarcar_todos(request, lista_id):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    lista = get_object_or_404(ListaCompraMensal, id=lista_id)
+    itens_comprados = lista.itens.filter(comprado=True)
+    count = itens_comprados.count()
+    itens_comprados.update(comprado=False)
+    messages.success(request, f'{count} item(ns) desmarcado(s) com sucesso.')
+    return redirect('compras:lista_detail', lista_id=lista_id)
+
+
 def item_delete(request, item_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])

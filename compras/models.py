@@ -20,6 +20,7 @@ class ListaCompraMensal(models.Model):
 
     mes = models.PositiveSmallIntegerField(choices=MESES, verbose_name='Mês')
     ano = models.PositiveSmallIntegerField(validators=[MinValueValidator(2020)], verbose_name='Ano')
+    nome_customizado = models.CharField(max_length=100, blank=True, verbose_name='Nome personalizado')
     criado_em = models.DateTimeField(auto_now_add=True, verbose_name='Criado em')
 
     class Meta:
@@ -31,7 +32,7 @@ class ListaCompraMensal(models.Model):
         verbose_name_plural = 'Listas de compra mensais'
 
     def __str__(self):
-        return f'{self.get_mes_display()}/{self.ano}'
+        return self.nome_customizado if self.nome_customizado else f'{self.get_mes_display()}/{self.ano}'
 
     @property
     def total_itens(self):

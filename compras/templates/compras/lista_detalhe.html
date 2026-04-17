@@ -47,14 +47,22 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h3>Itens da lista</h3>
-        {% if lista.total_comprados > 0 %}
-            <form method="post" action="{% url 'compras:limpar_comprados' lista.id %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-warning" onclick="return confirm('Tem certeza que deseja remover todos os itens comprados?')">
-                    Limpar comprados ({{ lista.total_comprados }})
-                </button>
-            </form>
-        {% endif %}
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            {% if lista.total_comprados > 0 %}
+                <form method="post" action="{% url 'compras:desmarcar_todos' lista.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info" onclick="return confirm('Tem certeza que deseja desmarcar todos os itens comprados?')">
+                        Desmarcar todos os comprados ({{ lista.total_comprados }})
+                    </button>
+                </form>
+                <form method="post" action="{% url 'compras:limpar_comprados' lista.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning" onclick="return confirm('Tem certeza que deseja excluir todos os itens comprados?')">
+                        Excluir todos os comprados ({{ lista.total_comprados }})
+                    </button>
+                </form>
+            {% endif %}
+        </div>
     </div>
 
     {% if lista.itens.all %}

@@ -62,8 +62,36 @@ class ComprasTests(TestCase):
         self.assertEqual(self.lista.total_comprados, 1)
         self.assertEqual(self.lista.total_pendentes, 1)
 
+    def test_nome_personalizado_lista(self):
+        self.lista.nome_customizado = 'lista generica'
+        self.lista.save()
+        self.assertEqual(str(self.lista), 'lista generica')
+
+    def test_desmarcar_todos_itens(self):
+        # Marcar alguns itens como comprados
+        self.item.comprado = True
+        self.item.save()
+        self.item_comprado.comprado = True
+        self.item_comprado.save()
+        
+        # Verificar que existem itens comprados
+        self.assertEqual(self.lista.total_comprados, 2)
+        
+        # Desmarcar todos
+        response = self.client.post(reverse('compras:desmarcar_todos', kwargs={'lista_id': self.lista.id}))
+        self.assertEqual(response.status_code, 302)
+        
+        # Verificar que todos foram desmarcados
+        self.lista.refresh_from_db()
+        self.assertEqual(self.lista.total_comprados, 0)
+        self.assertEqual(self.lista.total_pendentes, 2)
+
     def test_list_view(self):
+        # Configurar nome personalizado para o teste
+        self.lista.nome_customizado = 'lista generica'
+        self.lista.save()
+        
         response = self.client.get(reverse('compras:lista_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Abril/2026')
+        self.assertContains(response, 'lista generica')
         self.assertContains(response, 'Total de itens: 2')
