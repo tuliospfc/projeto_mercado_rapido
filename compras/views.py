@@ -81,6 +81,18 @@ def desmarcar_todos(request, lista_id):
     return redirect('compras:lista_detail', lista_id=lista_id)
 
 
+def marcar_todos(request, lista_id):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    lista = get_object_or_404(ListaCompraMensal, id=lista_id)
+    itens_pendentes = lista.itens.filter(comprado=False)
+    count = itens_pendentes.count()
+    itens_pendentes.update(comprado=True)
+    messages.success(request, f'{count} item(ns) marcado(s) como comprado(s) com sucesso.')
+    return redirect('compras:lista_detail', lista_id=lista_id)
+
+
 def item_delete(request, item_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])

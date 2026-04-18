@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:lista_id>/delete/', views.lista_delete, name='lista_delete'),
     path('<int:lista_id>/limpar-comprados/', views.limpar_comprados, name='limpar_comprados'),
     path('<int:lista_id>/desmarcar-todos/', views.desmarcar_todos, name='desmarcar_todos'),
+    path('<int:lista_id>/marcar-todos/', views.marcar_todos, name='marcar_todos'),
     path('item/<int:item_id>/toggle/', views.item_toggle_comprado, name='item_toggle'),
     path('item/<int:item_id>/delete/', views.item_delete, name='item_delete'),
 ]
