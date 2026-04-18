@@ -2,9 +2,18 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 import os
-SECRET_KEY = os.environ.get('SECRET_KEY', 'troque-esta-chave-em-producao')
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+
+# Configurações de Produção
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-chave-temporaria-desenvolvimento')
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+
+# Configurar ALLOWED_HOSTS para PythonAnywhere
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
+if not DEBUG:
+    # Adicionar seu domínio PythonAnywhere aqui
+    pythonanywhere_user = os.environ.get('PYTHONANYWHERE_USER', '')
+    if pythonanywhere_user:
+        ALLOWED_HOSTS.append(f'{pythonanywhere_user}.pythonanywhere.com')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,5 +68,18 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# Configurações de arquivos estáticos e mídia
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configurações de segurança para produção
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    SECURE_SSL_REDIRECT = False  # PythonAnywhere gratuito não tem HTTPS
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
