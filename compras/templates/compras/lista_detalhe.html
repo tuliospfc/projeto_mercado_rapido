@@ -5,6 +5,13 @@
 {% block content %}
     <h2>Lista de {{ lista }}</h2>
 
+    {% if lista.anotacao %}
+        <div class="card" style="margin-bottom: 20px;">
+            <h4>Anotação</h4>
+            <p style="white-space: pre-wrap;">{{ lista.anotacao }}</p>
+        </div>
+    {% endif %}
+
     <div class="resumo">
         <div class="box">
             <strong>Total</strong>

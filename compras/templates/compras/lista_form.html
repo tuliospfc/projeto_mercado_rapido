@@ -24,6 +24,18 @@
             <div class="erro-lista">{{ form.ano.errors }}</div>
         {% endif %}
 
+        <label for="{{ form.nome_customizado.id_for_label }}">Nome personalizado (opcional)</label>
+        {{ form.nome_customizado }}
+        {% if form.nome_customizado.errors %}
+            <div class="erro-lista">{{ form.nome_customizado.errors }}</div>
+        {% endif %}
+
+        <label for="{{ form.anotacao.id_for_label }}">Anotação (opcional)</label>
+        {{ form.anotacao }}
+        {% if form.anotacao.errors %}
+            <div class="erro-lista">{{ form.anotacao.errors }}</div>
+        {% endif %}
+
         <button type="submit" class="btn btn-primary">Salvar lista</button>
     </form>
 {% endblock %}

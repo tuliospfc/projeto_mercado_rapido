@@ -21,6 +21,7 @@ class ListaCompraMensal(models.Model):
     mes = models.PositiveSmallIntegerField(choices=MESES, verbose_name='Mês')
     ano = models.PositiveSmallIntegerField(validators=[MinValueValidator(2020)], verbose_name='Ano')
     nome_customizado = models.CharField(max_length=100, blank=True, verbose_name='Nome personalizado')
+    anotacao = models.TextField(blank=True, verbose_name='Anotação')
     criado_em = models.DateTimeField(auto_now_add=True, verbose_name='Criado em')
 
     class Meta:

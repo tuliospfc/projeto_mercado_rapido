@@ -5,10 +5,12 @@ from .models import ItemCompra, ListaCompraMensal
 class ListaCompraMensalForm(forms.ModelForm):
     class Meta:
         model = ListaCompraMensal
-        fields = ['mes', 'ano']
+        fields = ['mes', 'ano', 'nome_customizado', 'anotacao']
         widgets = {
             'mes': forms.Select(attrs={'class': 'form-control'}),
             'ano': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: 2026'}),
+            'nome_customizado': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: Compras do mês'}),
+            'anotacao': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Ex.: Anotações sobre esta lista de compras...'}),
         }
 
 
