@@ -2,6 +2,20 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 
+class Categoria(models.Model):
+    nome = models.CharField(max_length=50, unique=True, verbose_name='Nome da categoria')
+    cor = models.CharField(max_length=7, default='#007bff', verbose_name='Cor (hexadecimal)')
+    criado_em = models.DateTimeField(auto_now_add=True, verbose_name='Criado em')
+
+    class Meta:
+        ordering = ['nome']
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+
+    def __str__(self):
+        return self.nome
+
+
 class ListaCompraMensal(models.Model):
     MESES = [
         (1, 'Janeiro'),
@@ -50,6 +64,7 @@ class ListaCompraMensal(models.Model):
 
 class ItemCompra(models.Model):
     lista = models.ForeignKey(ListaCompraMensal, on_delete=models.CASCADE, related_name='itens', verbose_name='Lista')
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Categoria')
     nome = models.CharField(max_length=100, verbose_name='Nome do item')
     quantidade = models.CharField(max_length=50, blank=True, verbose_name='Quantidade')
     comprado = models.BooleanField(default=False, verbose_name='Comprado')

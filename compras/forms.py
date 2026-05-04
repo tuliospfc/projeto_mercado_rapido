@@ -17,8 +17,9 @@ class ListaCompraMensalForm(forms.ModelForm):
 class ItemCompraForm(forms.ModelForm):
     class Meta:
         model = ItemCompra
-        fields = ['nome', 'quantidade', 'observacao']
+        fields = ['categoria', 'nome', 'quantidade', 'observacao']
         widgets = {
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
             'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: Arroz'}),
             'quantidade': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: 2 pacotes'}),
             'observacao': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: marca preferida'}),
