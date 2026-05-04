@@ -32,7 +32,7 @@ def lista_detail(request, lista_id):
     lista = get_object_or_404(ListaCompraMensal.objects.prefetch_related('itens'), id=lista_id)
     
     # Obter parâmetro de ordenação
-    ordenacao = request.GET.get('ordenacao', 'padrao')
+    ordenacao = request.GET.get('ordenacao', 'categoria')
     
     # Ordenar itens conforme seleção
     if ordenacao == 'categoria':
@@ -44,9 +44,9 @@ def lista_detail(request, lista_id):
     
     # Opções de ordenação
     opcoes_ordenacao = [
-        ('padrao', 'Padrão (comprados primeiro)'),
         ('categoria', 'Por categoria'),
         ('nome', 'Por nome'),
+        ('padrao', 'Padrão (comprados primeiro)'),
     ]
 
     if request.method == 'POST':
