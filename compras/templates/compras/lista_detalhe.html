@@ -90,12 +90,12 @@
             <div class="card item-card {% if item.comprado %}item-comprado{% else %}item-pendente{% endif %}">
                 <div class="item-linha">
                     <div>
-                        {% if item.categoria %}
-                            <span class="categoria-tag" style="background-color: {{ item.categoria.cor }}20; color: {{ item.categoria.cor }}; border: 1px solid {{ item.categoria.cor }}; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 4px; display: inline-block;">
-                                {{ item.categoria.nome }}
-                            </span>
-                        {% endif %}
                         <div style="font-weight: bold; margin-bottom: 4px;">
+                            {% if item.categoria %}
+                                <span class="categoria-tag" style="background-color: {{ item.categoria.cor }}20; color: {{ item.categoria.cor }}; border: 1px solid {{ item.categoria.cor }}; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-right: 6px; display: inline-block;">
+                                    {{ item.categoria.nome }}
+                                </span>
+                            {% endif %}
                             {% if item.comprado %}
                                 ✅ <s>{{ item.nome }}</s>
                             {% else %}
