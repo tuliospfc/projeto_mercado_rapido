@@ -5,7 +5,7 @@ import os
 
 # Configurações de Produção
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-chave-temporaria-desenvolvimento')
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = True
 
 # Configurar ALLOWED_HOSTS para PythonAnywhere
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
