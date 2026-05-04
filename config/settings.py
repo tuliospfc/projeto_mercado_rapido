@@ -87,8 +87,8 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
-# Sessão de 1 minuto
-SESSION_COOKIE_AGE = 60  # 1 minuto
+# Sessão de 15 minutos
+SESSION_COOKIE_AGE = 900  # 15 minutos
 SESSION_SAVE_EVERY_REQUEST = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
