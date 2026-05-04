@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -6,11 +7,13 @@ from .forms import ItemCompraForm, ListaCompraMensalForm
 from .models import ItemCompra, ListaCompraMensal
 
 
+@login_required
 def lista_list(request):
     listas = ListaCompraMensal.objects.prefetch_related('itens').all()
     return render(request, 'compras/lista_list.html', {'listas': listas})
 
 
+@login_required
 def lista_create(request):
     if request.method == 'POST':
         form = ListaCompraMensalForm(request.POST)
@@ -24,6 +27,7 @@ def lista_create(request):
     return render(request, 'compras/lista_form.html', {'form': form})
 
 
+@login_required
 def lista_detail(request, lista_id):
     lista = get_object_or_404(ListaCompraMensal.objects.prefetch_related('itens'), id=lista_id)
 
@@ -41,6 +45,7 @@ def lista_detail(request, lista_id):
     return render(request, 'compras/lista_detalhe.html', {'lista': lista, 'form': form})
 
 
+@login_required
 def item_toggle_comprado(request, item_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
@@ -57,6 +62,7 @@ def item_toggle_comprado(request, item_id):
     return redirect('compras:lista_detail', lista_id=item.lista.id)
 
 
+@login_required
 def limpar_comprados(request, lista_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
@@ -69,6 +75,7 @@ def limpar_comprados(request, lista_id):
     return redirect('compras:lista_detail', lista_id=lista_id)
 
 
+@login_required
 def desmarcar_todos(request, lista_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
@@ -81,6 +88,7 @@ def desmarcar_todos(request, lista_id):
     return redirect('compras:lista_detail', lista_id=lista_id)
 
 
+@login_required
 def marcar_todos(request, lista_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
@@ -93,6 +101,7 @@ def marcar_todos(request, lista_id):
     return redirect('compras:lista_detail', lista_id=lista_id)
 
 
+@login_required
 def item_delete(request, item_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
@@ -105,6 +114,7 @@ def item_delete(request, item_id):
     return redirect('compras:lista_detail', lista_id=lista_id)
 
 
+@login_required
 def lista_delete(request, lista_id):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
