@@ -102,7 +102,7 @@
                     <div class="acoes">
                         <form method="post" action="{% url 'compras:item_toggle' item.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn {% if item.comprado %}btn-warning{% else %}btn-success{% endif %}" style="padding: 6px 10px; font-size: 12px;">
+                            <button type="submit" class="btn {% if item.comprado %}btn-warning{% else %}btn-success{% endif %}">
                                 {% if item.comprado %}↩️{% else %}✓{% endif %}
                             </button>
                         </form>
@@ -111,7 +111,7 @@
 
                         <form method="post" action="{% url 'compras:item_delete' item.id %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger" style="padding: 6px 10px; font-size: 12px;">🗑️</button>
+                            <button type="submit" class="btn btn-danger">🗑️</button>
                         </form>
                     </div>
                 </div>

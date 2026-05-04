@@ -36,6 +36,14 @@
         .item-info strong { display: inline-block; min-width: 80px; }
         .itens-grid { display: grid; gap: 8px; }
         .item-card { padding: 12px; }
+        @media (max-width: 768px) {
+            .container { width: 95%; padding: 16px; margin: 20px auto; }
+            .item-card { padding: 16px; }
+            .acoes { gap: 12px; }
+            .btn { padding: 12px 16px; font-size: 14px; min-height: 44px; }
+            .item-info { font-size: 16px; }
+            .item-info strong { min-width: 60px; }
+        }
     </style>
 </head>
 <body>
