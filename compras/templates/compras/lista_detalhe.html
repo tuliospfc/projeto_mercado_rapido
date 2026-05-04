@@ -58,6 +58,14 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h3>Itens da lista</h3>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <label for="ordenacao" style="font-weight: bold; margin: 0;">Ordenar por:</label>
+            <select id="ordenacao" name="ordenacao" onchange="window.location.href='?ordenacao=' + this.value" style="padding: 5px; border-radius: 4px; border: 1px solid #ddd;">
+                {% for valor, texto in opcoes_ordenacao %}
+                    <option value="{{ valor }}" {% if ordenacao == valor %}selected{% endif %}>{{ texto }}</option>
+                {% endfor %}
+            </select>
+        </div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             {% if lista.total_pendentes > 0 %}
                 <form method="post" action="{% url 'compras:marcar_todos' lista.id %}" style="display: inline;">
@@ -84,9 +92,9 @@
         </div>
     </div>
 
-    {% if lista.itens.all %}
+    {% if itens %}
         <div class="itens-grid">
-        {% for item in lista.itens.all %}
+        {% for item in itens %}
             <div class="card item-card {% if item.comprado %}item-comprado{% else %}item-pendente{% endif %}">
                 <div class="item-linha">
                     <div>

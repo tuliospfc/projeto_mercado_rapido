@@ -30,6 +30,24 @@ def lista_create(request):
 @login_required
 def lista_detail(request, lista_id):
     lista = get_object_or_404(ListaCompraMensal.objects.prefetch_related('itens'), id=lista_id)
+    
+    # Obter parâmetro de ordenação
+    ordenacao = request.GET.get('ordenacao', 'padrao')
+    
+    # Ordenar itens conforme seleção
+    if ordenacao == 'categoria':
+        itens = lista.itens.all().order_by('categoria__nome', 'comprado', 'nome')
+    elif ordenacao == 'nome':
+        itens = lista.itens.all().order_by('nome', 'comprado')
+    else:  # padrão
+        itens = lista.itens.all()
+    
+    # Opções de ordenação
+    opcoes_ordenacao = [
+        ('padrao', 'Padrão (comprados primeiro)'),
+        ('categoria', 'Por categoria'),
+        ('nome', 'Por nome'),
+    ]
 
     if request.method == 'POST':
         form = ItemCompraForm(request.POST, lista=lista)
@@ -42,7 +60,13 @@ def lista_detail(request, lista_id):
     else:
         form = ItemCompraForm(lista=lista)
 
-    return render(request, 'compras/lista_detalhe.html', {'lista': lista, 'form': form})
+    return render(request, 'compras/lista_detalhe.html', {
+        'lista': lista, 
+        'form': form, 
+        'itens': itens,
+        'ordenacao': ordenacao,
+        'opcoes_ordenacao': opcoes_ordenacao
+    })
 
 
 @login_required
